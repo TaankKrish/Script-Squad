@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Checker - Restore Health</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <a href="#"><img src="images/logo.jpg" alt="Logo"></a>
+                <span class="brand-name">Restore Health</span>
+            </div>
+            <div class="nav-right">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="health-tools.html">Health Tools</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Symptom Checker</h1>
+        
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" min="0" max="120" required>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="symptoms">Add Symptoms</label>
+            <select id="symptoms">
+                <option value="">Select a symptom</option>
+                <option value="fever">Fever</option>
+                <option value="cough">Cough</option>
+                <option value="headache">Headache</option>
+                <option value="fatigue">Fatigue</option>
+                <option value="nausea">Nausea</option>
+                <!-- Add more symptoms as needed -->
+            </select>
+        </div>
+
+        <div id="selectedSymptoms" class="symptom-list">
+            <!-- Selected symptoms will be added here -->
+        </div>
+
+        <button class="check-button" onclick="checkSymptoms()">Check Symptoms</button>
+
+        <div id="results" class="results" style="display: none;">
+            <h2>Analysis Results</h2>
+            <div id="severityLevel" class="severity">
+                <!-- Severity level will be shown here -->
+            </div>
+            <div id="possibleConditions">
+                <!-- Possible conditions will be listed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add selected symptoms to the list
+        document.getElementById('symptoms').addEventListener('change', function() {
+            const symptom = this.value;
+            if (symptom) {
+                const symptomsDiv = document.getElementById('selectedSymptoms');
+                const symptomTag = document.createElement('span');
+                symptomTag.className = 'symptom-tag';
+                symptomTag.innerHTML = `${symptom} <button onclick="this.parentElement.remove()">×</button>`;
+                symptomsDiv.appendChild(symptomTag);
+                this.value = ''; // Reset select
+            }
+        });
+
+        // Example function to check symptoms
+        function checkSymptoms() {
+            const results = document.getElementById('results');
+            const severityLevel = document.getElementById('severityLevel');
+            const possibleConditions = document.getElementById('possibleConditions');
+            
+            // Show results section
+            results.style.display = 'block';
+            
+            // Example severity calculation
+            const severity = Math.random(); // Replace with actual logic
+            if (severity < 0.3) {
+                severityLevel.className = 'severity low';
+                severityLevel.textContent = 'Low Risk: Your symptoms suggest a mild condition';
+            } else if (severity < 0.7) {
+                severityLevel.className = 'severity medium';
+                severityLevel.textContent = 'Medium Risk: Consider consulting a healthcare provider';
+            } else {
+                severityLevel.className = 'severity high';
+                severityLevel.textContent = 'High Risk: Please seek immediate medical attention';
+            }
+            
+            // Example conditions (replace with actual logic based on symptoms)
+            possibleConditions.innerHTML = `
+                <div class="condition-item">Common Cold</div>
+                <div class="condition-item">Seasonal Allergies</div>
+                <div class="condition-item">Viral Infection</div>
+            `;
+        }
+    </script>
+</body>
+</html>
